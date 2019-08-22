@@ -11,7 +11,6 @@ namespace ImageUploadDemo
     {
         public static async Task<CloudBlobContainer> GetBlobContainer(ConfigHelper config)
         {
-            //var config = new ConfigHelper();
             // Pull these from config
             var blobStorageConnectionString = config.ConnectionString;
             var blobStorageContainerName = config.ContainerName;

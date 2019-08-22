@@ -1,11 +1,8 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ImageUploadDemo.Hubs;
-using Microsoft.AspNetCore.SignalR;
 
 namespace ImageUploadDemo
 {
@@ -19,25 +16,6 @@ namespace ImageUploadDemo
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("MyPolicy",
-            //        builder =>
-            //        {
-            //            builder
-            //                .AllowAnyOrigin()
-            //                .AllowAnyHeader()
-            //                .AllowAnyMethod();
-            //        });
-            //});
-
-
-            //services.AddSignalR(opt =>
-            //        opt.KeepAliveInterval = TimeSpan.FromSeconds(10)
-            //    //opt.KeepAliveInterval = TimeSpan.FromDays(1)
-            //);
-
-
             services.AddCors(options => options.AddPolicy("CorsPolicy",
                 builder =>
                 {
@@ -58,8 +36,6 @@ namespace ImageUploadDemo
             services.AddMvc();
             services.AddTransient<ConfigHelper>();
             services.AddTransient<NotifyService>();
-            //services.AddTransient<ImageHub>();
-            //services.AddTransient<IHubContext, ImageHub>();
 
             services.AddSignalR();
         }
@@ -71,21 +47,12 @@ namespace ImageUploadDemo
             }
 
             app.UseCors("CorsPolicy");
-            //app.UseCors(b => b
-            //    .AllowAnyOrigin()
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader());
 
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ImageHub>("/imageHub");
             });
             app.UseMvc();
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("MVC didn't find anything!");
-            //});
-
         }
     }
 }
